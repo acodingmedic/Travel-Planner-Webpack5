@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Holonic Travel Planner - Advanced AI-powered travel planning with holonic architecture" />
+    <meta name="keywords" content="travel, planning, holonic, AI, booking, flights, hotels" />
+    <meta name="author" content="Holonic Travel Team" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; font-src 'self'; object-src 'none'; media-src 'self'; frame-src 'none';" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Holonic Travel" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Holonic Travel Planner" />
+    <meta property="og:description" content="Advanced AI-powered travel planning with holonic architecture" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://holonic-travel.com" />
+    <meta property="og:image" content="/assets/og-image.png" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Holonic Travel Planner" />
+    <meta name="twitter:description" content="Advanced AI-powered travel planning with holonic architecture" />
+    <meta name="twitter:image" content="/assets/twitter-image.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="icon" type="image/png" href="/assets/favicon.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Title -->
+    <title>Holonic Travel Planner</title>
+    
+    <!-- Inline Critical CSS -->
+    <style>
+        /* Critical CSS for initial page load */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body {
+            margin: 0;
+            background-color: #ffffff;
+            color: #1f2937;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        #root {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Loading spinner styles */
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        /* Error boundary styles */
+        .error-boundary {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+        
+        .error-boundary h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .error-boundary p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .error-boundary button {
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .error-boundary button:hover {
+            background-color: #b91c1c;
+        }
+        
+        /* Hide content until React loads */
+        .app-loading {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .app-loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Root element for React application -->
+    <div id="root">
+        <!-- Loading screen shown until React loads -->
+        <div class="loading-container">
+            <div>
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Loading Holonic Travel Planner...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Error boundary fallback (shown if JavaScript fails to load) -->
+    <noscript>
+        <div class="error-boundary">
+            <h1>JavaScript Required</h1>
+            <p>This application requires JavaScript to run. Please enable JavaScript in your browser and refresh the page.</p>
+        </div>
+    </noscript>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator && 'production' === 'production') {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+    
+    <!-- Main application script -->
+    <script type="module" src="/src/frontend/index.js"></script>
+</body>
+</html>

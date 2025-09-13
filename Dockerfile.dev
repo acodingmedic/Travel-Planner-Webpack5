@@ -1,0 +1,65 @@
+# Development Dockerfile for Holonic Travel Planner
+# Optimized for development with hot reloading and debugging capabilities
+
+FROM node:18-alpine
+
+# Install development tools
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    git \
+    curl \
+    vim \
+    bash
+
+# Create app directory
+WORKDIR /app
+
+# Create non-root user for development
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S holonic -u 1001 -G nodejs
+
+# Install global development tools
+RUN npm install -g \
+    nodemon \
+    concurrently \
+    webpack-cli \
+    @babel/cli
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Create necessary directories with proper permissions
+RUN mkdir -p \
+    logs \
+    temp \
+    uploads \
+    dist \
+    coverage \
+    .nyc_output && \
+    chown -R holonic:nodejs /app
+
+# Switch to non-root user
+USER holonic
+
+# Expose ports
+EXPOSE 3000 9229 8080
+
+# Environment variables for development
+ENV NODE_ENV=development
+ENV PORT=3000
+ENV DEBUG=holonic:*
+
+# Health check for development
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Default command for development with hot reloading
+CMD ["npm", "run", "dev"]
